@@ -1,0 +1,22 @@
+@sider_background: #242424;
+@footer_background: #313030;
+
+
+.layout {
+  color: #f4efef;
+  position: relative;
+
+
+  &_sider {
+    height: calc(100vh);
+    background-color: @sider_background !important;
+  }
+
+  &_footer{
+    background-color: @footer_background !important;
+    height: calc(10vh);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}

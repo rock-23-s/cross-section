@@ -1,7 +1,10 @@
+import { layout } from "../app";
+
 export default [
   {
     path: '/',
     component: '../layouts/Layout',
-    routes: []
+    layout: false,
+    routes: [],
   }
 ]
