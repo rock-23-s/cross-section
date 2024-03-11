@@ -13,7 +13,10 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": ".erb/dll"
+    "outDir": "electron/.erb/dll",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": [
     "mock/**/*",
@@ -28,7 +31,16 @@
     ".stylelintrc.js",
     ".prettierrc.js",
     "jest.config.js",
-    "mock/*"
+    "mock/*",
   ],
-  "exclude": ["node_modules", "build", "dist", "scripts", "src/.umi/*", "webpack", "jest"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "scripts",
+    "src/.umi/*",
+    "webpack",
+    "jest",
+    "electron/.erb/dll"
+  ]
 }

@@ -8,7 +8,14 @@ export default defineConfig({
   initialState: {},
   request: {},
   layout: {
-    title: '@umijs/max',
+    title: '',
+  },
+  lessLoader: {
+    modifyVars: {
+      hack: `true;
+        @import "~@/styles/attribute.less";
+       `,
+    },
   },
   routes,
   npmClient: 'yarn',
