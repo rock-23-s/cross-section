@@ -1,36 +1,44 @@
 import Icon from '@ant-design/icons';
 
-import home from '@/assets/slider_left/home.svg';
-import homeActive from '../assets/slider_left/home_active.svg'
-import search from '../assets/slider_left/search.svg'
-import searchActive from '../assets/slider_left/search_active.svg'
-import library from '@/assets/slider_left/library.svg'
-import plus from '@/assets/slider_left/plus.svg'
 
+// 批量引入
+const importAll = (requireContext: __WebpackModuleApi.RequireContext) => {
+  const requireAll = requireContext.keys().map(key => {
+    const name = key.replace(/\.\/(.*)\.\w+$/, '$1');
+    console.log(name, requireContext(key))
+    return { name, value: requireContext(key) };
+  })
+  return requireAll
+}
 
+let routeList: {name: string, value: string}[] = []
+try {
+  routeList = importAll(require.context('../assets/slider_left', true, /\.svg$/))
+} catch (error) {
+  console.log(error);
+  routeList = []
+}
 /**
  * 
  * 导出图标
  * 
  */
+const IconFont = (props: {name: string, width?: string | number, className?: string}) => {
+  const ListItem = routeList.find(item => item.name === props.name)
+  return (
+    <Icon
+      component={() => (
+        <img
+          src={ListItem?.value}
+          alt=""
+          width={props.width || 16}
+        />
+      )}
+      {...props}
+    />
+  );
+};
 
-export const HomeIcon = (props: any) => (
-  <Icon component={() => <img src={home} alt="" width={props.width || 16} />} {...props} />
-);
-export const HomeActiveIcon = (props: any) => (
-  <Icon component={() => <img src={homeActive} alt="" width={props.width || 16} />} {...props} />
-);
-export const SearchIcon = (props: any) => (
-  <Icon component={() => <img src={search} width={props.width || 16} alt="" />} {...props} />
-);
-export const SearchActiveIcon = (props: any) => (
-  <Icon component={() => <img src={searchActive} width={props.width || 16} alt="" />} {...props} />
-);
-export const LibraryIcon = (props: any) => (
-  <Icon component={() => <img src={library} width={props.width || 16} alt="" />} {...props} />
-);
-export const PlusIcon = (props: any) => (
-  <Icon component={() => <img src={plus} width={props.width || 16} alt="" />} {...props} />
-);
-
-
+export {
+  IconFont
+}

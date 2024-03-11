@@ -2,7 +2,7 @@ import { useState } from 'react'
 import classnames from 'classnames';
 import styles from './index.less';
 // 引入图标
-import { HomeIcon, HomeActiveIcon, SearchIcon, LibraryIcon, SearchActiveIcon, PlusIcon } from '../../icons/sider_left'
+import { IconFont } from '../../icons/sider_left'
 // 引入UI
 import { Menu, Dropdown } from 'antd';
 // 引入type
@@ -27,18 +27,18 @@ const SiderList: React.FC<SiderListType> = (props) => {
       'home',
       selectMenu === 'home'
         ?
-        <HomeActiveIcon width="25"/>
+        <IconFont name='home_active' width="25" />
         :
-        <HomeIcon width="25" />
+        <IconFont name='home' width="25" />
     ),
     getItem(
       '搜索',
       'search',
       selectMenu === 'search'
         ?
-        <SearchActiveIcon width="23" />
+        <IconFont name='search_active' width="23" />
         :
-        <SearchIcon width="23" />
+        <IconFont name='search' width="23" />
     ),
   ];
   
@@ -103,12 +103,16 @@ const SiderList: React.FC<SiderListType> = (props) => {
             }
             onClick={() => setCollapsed(!collapsed)}
           >
-            <LibraryIcon width="23" className={styles.siderList_library_button_icon} />
+            <IconFont
+              name='library'
+              width="23"
+              className={styles.siderList_library_button_icon}
+            />
             {!collapsed && <span className={styles.siderList_library_button_text}>音乐库</span>}
           </div>
           <span>
             <Dropdown menu={{ items }} trigger={['click']}>
-              <PlusIcon width="23" />
+              <IconFont name='plus' width="23" />
             </Dropdown>
           </span>
         </div>
