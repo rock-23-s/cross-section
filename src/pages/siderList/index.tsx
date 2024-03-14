@@ -2,7 +2,7 @@ import { useState } from 'react'
 import classnames from 'classnames';
 import styles from './index.less';
 // 引入图标
-import { IconFont } from '../../icons/sider_left'
+import { IconFont } from '@/icons/index'
 // 引入UI
 import { Menu, Dropdown } from 'antd';
 // 引入type
@@ -110,11 +110,11 @@ const SiderList: React.FC<SiderListType> = (props) => {
             />
             {!collapsed && <span className={styles.siderList_library_button_text}>音乐库</span>}
           </div>
-          <span>
+          {/* <span>
             <Dropdown menu={{ items }} trigger={['click']}>
               <IconFont name='plus' width="23" />
             </Dropdown>
-          </span>
+          </span> */}
         </div>
       </div>
     </div>

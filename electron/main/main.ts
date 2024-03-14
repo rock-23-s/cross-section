@@ -13,7 +13,8 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
-import { resolveHtmlPath } from './utils/dom';
+import { resolveHtmlPath, getAssetPath } from './utils/path';
+import { createAt } from './views/at'
 
 class AppUpdater {
   constructor() {
@@ -61,28 +62,33 @@ const createWindow = async () => {
     await installExtensions();
   }
 
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../assets');
-
-  const getAssetPath = (...paths: string[]): string => {
-    return path.join(RESOURCES_PATH, ...paths);
-  };
+  
 
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
     height: 728,
-    icon: getAssetPath('icon.png'),
+    // min|max -width|height来设置窗口的最大值或最小值
+    minWidth: 700,
+    minHeight: 570,
+    // 作用在window上，mac不显示，linux暂不清楚
+    icon: getAssetPath('logo.png'),
+    // 作用在window和mac上，linux暂不清楚
+    title: "横截面",
+    // frame：默认true，就是显示窗口关闭、logo和标题那类的内容，false就不显示了
+    frame: true,
+    // transparent: true, // 窗口透明 默认false. 在Windows上，仅在无边框窗口下起作用。
+    // // 自动隐藏菜单栏，除非按了Alt键。 默认值为 false.
+    // autoHideMenuBar: true,
+    // webPreferences：网页功能设置
     webPreferences: {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../.erb/dll/preload.js'),
     },
   });
-
-  console.log(resolveHtmlPath('index.html'), '00000000')
   mainWindow.loadURL(resolveHtmlPath(''));
+  createAt(mainWindow)
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {

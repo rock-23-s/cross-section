@@ -1,8 +1,6 @@
 import styles from './index.less'
 import { useState } from 'react'
-import { Divider, Layout } from 'antd';
-import classnames from 'classnames'
-import { LibraryIcon } from '../icons/sider_left'
+import { Layout } from 'antd';
 
 // 引入左侧sider
 import SiderList from '../pages/siderList'
@@ -21,7 +19,6 @@ const LayoutComponent: React.FC = () => {
    * 折叠显示的图标事件
    */
   const siderCollapse = (colleapse: boolean, type: string) => {
-    console.log(colleapse, type)
     setIsCollapsed(!isCollapsed)
   }
 
