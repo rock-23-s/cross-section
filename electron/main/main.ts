@@ -9,13 +9,14 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, Notification} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath, getAssetPath } from './utils/path';
-import { createAt } from './views/at'
-
+// 创建子窗口
+// import { createAt } from './renderer/at'
+import { createTray } from './renderer/tray'
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -57,12 +58,15 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
+function showNotification () {
+  console.log('show notification')
+  const notification = new Notification({ title: '是否关闭当前应用', body: '', icon: getAssetPath('logo.png') })
+  notification.show();
+}
 const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
   }
-
-  
 
   mainWindow = new BrowserWindow({
     show: false,
@@ -82,14 +86,21 @@ const createWindow = async () => {
     // autoHideMenuBar: true,
     // webPreferences：网页功能设置
     webPreferences: {
+      // 将preload.js 脚本附在渲染进程上
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../.erb/dll/preload.js'),
     },
   });
-  mainWindow.loadURL(resolveHtmlPath(''));
-  createAt(mainWindow)
 
+  mainWindow.loadURL(resolveHtmlPath(''));
+  /**
+   * 创建子组件
+   **/
+  // createAt(mainWindow)
+  createTray(mainWindow)
+
+  
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
@@ -101,9 +112,21 @@ const createWindow = async () => {
     }
   });
 
+  
+  mainWindow.on('close', (e) => {
+    console.log('I do not want to be closed')
+    // e.preventDefault();
+  })
+ 
+
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  mainWindow.on('hide', () => {
+    console.log('hide -----')
+  })
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
@@ -141,4 +164,6 @@ app
       if (mainWindow === null) createWindow();
     });
   })
+  .then(showNotification)
   .catch(console.log);
+
