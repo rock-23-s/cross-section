@@ -12,6 +12,14 @@ type PlayListType = {
   collapsed: boolean;
 }
 
+const mockMusicList = [
+  {
+    name: '闻到(影视剧《唯有暗香来》）',
+    author: 'sunmy',
+    avatar: ''
+  }
+]
+
 const PlayList: React.FC<PlayListType> = (props) => {
   const { collapsed } = props
 
