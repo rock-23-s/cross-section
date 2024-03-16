@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import classnames from 'classnames';
 import styles from './index.less';
 // 引入图标
@@ -9,7 +9,8 @@ import { Menu, Dropdown } from 'antd';
 import type { MenuPropsAnd } from '@/interface/SiderList'
 // 引入拆分模块公共依赖数据
 import { getItem } from '@/models/siderList'
-import type { MenuProps } from 'antd';
+// 引入歌单列表组件
+import PlayList from './playlist'
 
 
 type SiderListType = {
@@ -42,31 +43,33 @@ const SiderList: React.FC<SiderListType> = (props) => {
     ),
   ];
   
-  const items: MenuProps['items'] = [
+  const dropList: MenuPropsAnd['items'] = [
     {
       key: '1',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-          1st menu item
-        </a>
+        <span>
+          <IconFont
+            name='musicClass'
+            width={25}
+            className={styles.siderList_library_gather_dropDown_icon}
+          />
+          创建新歌单
+        </span>
       ),
     },
     {
       key: '2',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-          2nd menu item
-        </a>
+        <span>
+          <IconFont
+            name='file'
+            width={25}
+            className={styles.siderList_library_gather_dropDown_icon}
+          />
+          创建歌单文件夹
+        </span>
       ),
-    },
-    {
-      key: '3',
-      label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-          3rd menu item
-        </a>
-      ),
-    },
+    }
   ];
 
   /**
@@ -76,6 +79,22 @@ const SiderList: React.FC<SiderListType> = (props) => {
     setSelectMenu(item.key)
   }
 
+  const renderCollapsed = (key: string) => useMemo(() => {
+    const collapsedObj: { [key: string]: any } = {
+      libraryDom: <span className={styles.siderList_library_topMenu_button_text}>音乐库</span>,
+      dropdownDom: <>
+        <Dropdown
+          overlayClassName={styles.siderList_library_topMenu_gather_dropDown}
+          menu={{ items: dropList }}
+          trigger={['click']}
+        >
+          <IconFont name='plus' width="22" />
+        </Dropdown>
+        <IconFont className={styles.siderList_library_topMenu_gather_arrow} name='arrow' width="22" />
+      </>
+    }
+    return !collapsed && collapsedObj[key]
+  }, [collapsed])
   return <>
     <div className={styles.siderList}>
       {/* 导航部分 */}
@@ -92,13 +111,14 @@ const SiderList: React.FC<SiderListType> = (props) => {
       </div>
       {/* 音乐库 */}
       <div className={styles.siderList_library}>
-        <div>
+        {/* 顶部菜单 */}
+        <div className={styles.siderList_library_topMenu}>
           {/* 音乐库按钮 */}
           <div
             className={
               classnames({
-                [styles.siderList_library_button]: true,
-                [styles.siderList_library_align]: collapsed
+                [styles.siderList_library_topMenu_button]: true,
+                [styles.siderList_library_topMenu_align]: collapsed
               })
             }
             onClick={() => setCollapsed(!collapsed)}
@@ -106,16 +126,17 @@ const SiderList: React.FC<SiderListType> = (props) => {
             <IconFont
               name='library'
               width="23"
-              className={styles.siderList_library_button_icon}
+              className={styles.siderList_library_topMenu_button_icon}
             />
-            {!collapsed && <span className={styles.siderList_library_button_text}>音乐库</span>}
+            {renderCollapsed('libraryDom')}
           </div>
-          {/* <span>
-            <Dropdown menu={{ items }} trigger={['click']}>
-              <IconFont name='plus' width="23" />
-            </Dropdown>
-          </span> */}
+          <div className={styles.siderList_library_topMenu_gather}>
+            {renderCollapsed('dropdownDom')}
+          </div>
         </div>
+
+        {/* 列表按钮 */}
+        <PlayList collapsed={collapsed} />
       </div>
     </div>
   </>

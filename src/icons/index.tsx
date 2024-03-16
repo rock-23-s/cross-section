@@ -41,6 +41,5 @@ const IconFont = (props: {name: string, width?: string | number, className?: str
 };
 
 export {
-  // IconList,
   IconFont
 }

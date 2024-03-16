@@ -1,0 +1,33 @@
+.buttonRound {
+  :global {
+    .ant-btn-sm {
+      height: 30px;
+    }
+
+    .ant-btn, .ant-btn:active {
+      background-color: @default_button_bg !important;
+      color: @default_color;
+    }
+
+    .ant-btn:hover{
+      background-color: @default_button_bg_hover !important;
+    }
+
+    .ant-btn:focus-visible{
+      outline: none;
+    }
+
+    .ant-btn-primary{
+      box-shadow: none;
+    }
+
+   
+  }
+
+  /**
+  * 去掉button 点击时的光晕
+  */
+  :global(.ant-wave) {
+    display: none !important;
+  }
+}

@@ -8,6 +8,7 @@ import SiderList from '../pages/siderList'
 import ContentCenter from '../pages/content'
 // 引入右侧sider
 import MusicMessage from '../pages/musicMessage'
+import classNames from 'classnames';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -28,11 +29,14 @@ const LayoutComponent: React.FC = () => {
       <Header />
       <Layout className={styles.layout_content} >
         <Sider
-          className={styles.layout_left_sider}
+          className={classNames({
+            [styles.layout_content_leftSider]: !isCollapsed,
+            [styles.layout_content_collapsed]: isCollapsed
+          })}
           onCollapse={siderCollapse}
           collapsible
           collapsed={isCollapsed}
-          breakpoint="md"
+          breakpoint="lg"
           trigger={
             null
           }
@@ -42,7 +46,7 @@ const LayoutComponent: React.FC = () => {
         <Content>
           <ContentCenter />
         </Content>
-        <Sider className={styles.layout_right_sider}>
+        <Sider className={styles.layout_content_rightSider}>
           <MusicMessage />
         </Sider>
       </Layout>

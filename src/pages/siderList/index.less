@@ -2,6 +2,8 @@
   color: #f4efef;
   width: 100%;
   height: 100%;
+  font-size: 16px;
+  // font-weight: 600;
 
   &_nav, &_library {
     background-color: @sider_background;
@@ -9,34 +11,77 @@
   }
 
   &_library{
-    margin: 0 4px;
+    margin: 0;
     margin-top: 7px;
     padding: 0 16px 0 24px;
     width: 100%;
     height: calc(100vh - 224px);
     text-align: left;
+    
 
-    &_button{
-      transition: border-color 0.3s,background 0.3s,padding 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
-      height: 40px;
-      line-height: 40px;
-      
-      &_icon {
-        position: relative;
-        top: -3px;
-        display: inline-block;
+    &_topMenu{
+      display: flex;
+      justify-content: space-between;
+      height: 48px;
+
+      &_button{
+        transition: border-color 0.3s,background 0.3s,padding 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+        height: 43px;
+        line-height: 43px;
+        
+        &_icon {
+          position: relative;
+          top: -4px;
+          display: inline-block;
+        }
+    
+        &_text {
+          margin-left: 10px;
+          transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),margin 0.3s,color 0.3s;
+        }
       }
   
-      &_text {
-        margin-left: 10px;
-        transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),margin 0.3s,color 0.3s;
+      &_align {
+        text-align: center;
+      }
+  
+      &_gather {
+        height: 43px;
+        line-height: 43px;
+        position: relative;
+        top: 3px;
+  
+        &_dropDown {
+          &_icon{
+            position: relative;
+            top: 5px;
+            margin-right: 10px;
+          }
+    
+          :global {
+            .ant-dropdown-menu{
+              background-color: #272626;
+              padding: 0;
+        
+              .ant-dropdown-menu-item {
+                color: #fff;
+                line-height: 32px;
+              }
+    
+              .ant-dropdown-menu-item:hover {
+                background-color: #404040;
+              }
+            }
+          }
+        }
+
+        &_arrow {
+          margin-left: 20px;
+        }
       }
     }
 
-    &_align {
-      text-align: center;
-    }
-
+    
   }
 
   :global {
@@ -50,6 +95,11 @@
 
     .ant-menu-dark .ant-menu-item-selected{
       color: #fff;
+    }
+
+    .ant-menu-item {
+      font-size: 16px;
+      margin-inline: 0;
     }
   }
 }
