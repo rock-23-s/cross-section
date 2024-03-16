@@ -1,27 +1,32 @@
 import { useMemo, useState } from 'react'
 import classnames from 'classnames';
+// 样式
 import styles from './index.less';
-// 引入图标
+// 图标
 import { IconFont } from '@/icons/index'
-// 引入UI
+// UI
 import { Menu, Dropdown } from 'antd';
-// 引入type
+// type
 import type { MenuPropsAnd } from '@/interface/SiderList'
-// 引入拆分模块公共依赖数据
+// 拆分模块公共依赖数据
 import { getItem } from '@/models/siderList'
-// 引入歌单列表组件
+// 歌单列表组件
 import PlayList from './playlist'
 
 
 type SiderListType = {
+  /** 收缩框状态 */
   collapsed: boolean;
+  /** 设置收缩框 */
   setCollapsed: (flag: boolean) => void;
 }
 
 const SiderList: React.FC<SiderListType> = (props) => {
   const { collapsed, setCollapsed } = props
+  /** 选中menu：用来控制图标的展示 */
   const [selectMenu, setSelectMenu] = useState('')
 
+  /** 收缩框的menu菜单 */
   const menuList: MenuPropsAnd['items'] = [
     getItem(
       '主页',
@@ -42,7 +47,8 @@ const SiderList: React.FC<SiderListType> = (props) => {
         <IconFont name='search' width="23" />
     ),
   ];
-  
+
+  /** 点击+显示下拉框的菜单列表 */
   const dropList: MenuPropsAnd['items'] = [
     {
       key: '1',
@@ -79,6 +85,7 @@ const SiderList: React.FC<SiderListType> = (props) => {
     setSelectMenu(item.key)
   }
 
+  /** 渲染是否收缩的dom 封装 */
   const renderCollapsed = (key: string) => useMemo(() => {
     const collapsedObj: { [key: string]: any } = {
       libraryDom: <span className={styles.siderList_library_topMenu_button_text}>音乐库</span>,
@@ -95,6 +102,7 @@ const SiderList: React.FC<SiderListType> = (props) => {
     }
     return !collapsed && collapsedObj[key]
   }, [collapsed])
+
   return <>
     <div className={styles.siderList}>
       {/* 导航部分 */}

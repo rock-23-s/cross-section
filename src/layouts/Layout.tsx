@@ -1,14 +1,13 @@
 import styles from './index.less'
 import { useState } from 'react'
 import { Layout } from 'antd';
-
+import classNames from 'classnames';
 // 引入左侧sider
 import SiderList from '../pages/siderList'
 // 引入Content
 import ContentCenter from '../pages/content'
 // 引入右侧sider
 import MusicMessage from '../pages/musicMessage'
-import classNames from 'classnames';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -16,13 +15,13 @@ const LayoutComponent: React.FC = () => {
 
   // 是否折叠
   const [isCollapsed, setIsCollapsed] = useState(false)
+
   /**
    * 折叠显示的图标事件
    */
   const siderCollapse = (colleapse: boolean, type: string) => {
     setIsCollapsed(!isCollapsed)
   }
-
 
   return (
     <Layout className={styles.layout}>

@@ -11,13 +11,23 @@ import styles from './index.less'
 import classNames from "classnames";
 
 type ButtonRoundType = {
+  /** button value */
   name: string,
+  /** 按钮的点击事件 */
   clickHandle: () => void;
+  /** class */
   className?: string;
 }
 
 const ButtonRound:React.FC<ButtonRoundType> = (props) => {
   const { name, clickHandle } = props
+
+  /**
+   * 封装的样式
+   * @param name value内容
+   * @param clickHandle 点击事件
+   * @returns JSX.Element
+   */
   const menuTab = (name: string, clickHandle: () => void) => useMemo(() => {
     return <Button
       type="primary"

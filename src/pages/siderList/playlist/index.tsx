@@ -1,11 +1,14 @@
 // 引入button组件
+import { useMemo } from 'react';
+// 按钮组件
 import ButtonRound from '@/components/ButtonRound'
 import styles from './index.less'
 import classNames from 'classnames';
+// 图标
 import { IconFont } from '@/icons';
-import { useMemo } from 'react';
 
 type PlayListType = {
+  /** 收缩框状态 */
   collapsed: boolean;
 }
 
@@ -19,12 +22,17 @@ const PlayList: React.FC<PlayListType> = (props) => {
     console.log('歌单的点击事件')
   }
 
+  /**
+   * 将涉及收缩框的进行class合成，收缩框后的内容显示，我这里是通过class来控制的
+   * @param classList class
+   */
   const resetClass = (classList = {}) => useMemo(() => {
     return classNames({
       ...classList,
       [styles.playlist_isShow]: collapsed,
     })
   }, [collapsed])
+
   return <>
     <div className={styles.playlist}>
       <div className={resetClass()}>
