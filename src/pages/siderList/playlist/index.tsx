@@ -5,19 +5,50 @@ import ButtonRound from '@/components/ButtonRound'
 import styles from './index.less'
 import classNames from 'classnames';
 // 图标
-import { IconFont } from '@/icons';
+import { IconFont, avatarList } from '@/icons';
+// 列表组件
+import MusicList from '@/components/MusicList';
+// 滚动条组件
+import CrossScroll from '@/components/CrossScroll'
+
 
 type PlayListType = {
   /** 收缩框状态 */
   collapsed: boolean;
 }
 
+/** 模拟歌单列表 */
 const mockMusicList = [
   {
     name: '闻到(影视剧《唯有暗香来》）',
-    author: 'sunmy',
-    avatar: ''
-  }
+    author: '黄诗扶',
+    avatar: avatarList('smell')
+  },
+  {
+    name: '样子-电视剧《要久久爱》',
+    author: '孙燕姿',
+    avatar: avatarList('appearance')
+  },
+  {
+    name: '华语',
+    author: '歌单.sunmy',
+    avatar: avatarList('beast')
+  },
+  {
+    name: '闻到(影视剧《唯有暗香来》）',
+    author: '黄诗扶',
+    avatar: avatarList('smell')
+  },
+  {
+    name: '样子-电视剧《要久久爱》',
+    author: '孙燕姿',
+    avatar: avatarList('appearance')
+  },
+  {
+    name: '华语',
+    author: '歌单.sunmy',
+    avatar: avatarList('beast')
+  },
 ]
 
 const PlayList: React.FC<PlayListType> = (props) => {
@@ -59,6 +90,11 @@ const PlayList: React.FC<PlayListType> = (props) => {
 
       <div className={styles.playlist_list}>
         播放列表
+        <CrossScroll>
+          <slot name='musicList'>
+            <MusicList list={mockMusicList} />
+          </slot>
+        </CrossScroll>
       </div>
     </div>
   </>

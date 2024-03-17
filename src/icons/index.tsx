@@ -7,18 +7,26 @@ import { union } from 'lodash'
  */
 // 引入路径
 const slider_left = require.context('../assets/slider_left', true, /\.svg$/)
-const content = require.context('../assets/iconSvg', true, /\.svg$/)
+// const content = require.context('../assets/iconSvg', true, /\.svg$/)
 const test = require.context('../assets/iconAll', true, /\.svg$/)
+const music = require.context('../assets/music', true, /\.png$/)
+
 // 枚举，便于引入多个路径的处理
 const list: any = {
   slider_left,
   // content,
   test
 };
+console.log(resetImportList(music), '------ music');
 
 const IconList = Object.keys(list).map(item => {
   return resetImportList(list[item])
 })
+
+const avatarList = (avatarKey: string) => {
+  const avatar = resetImportList(music).find(item => item.name === avatarKey)
+  return avatar?.value
+}
 /**
  * 
  * 导出图标
@@ -41,5 +49,6 @@ const IconFont = (props: {name: string, width?: string | number, className?: str
 };
 
 export {
+  avatarList,
   IconFont
 }

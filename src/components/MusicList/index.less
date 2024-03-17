@@ -1,0 +1,23 @@
+.musicList {
+  :global {
+    .ant-list-item-meta-title > a {
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    .ant-list-item-meta-content,.ant-list-item-meta-title, .ant-list-item-meta-title > a, .ant-list-item-meta-description {
+      color: @default_color !important;
+     
+      a {
+        color: @default_color !important;
+      }
+    }
+
+    :where(.css-dev-only-do-not-override-1drr2mu).ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar {
+      margin-inline-end: 12px;
+    }
+  }
+}
