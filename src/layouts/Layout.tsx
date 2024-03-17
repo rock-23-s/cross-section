@@ -8,6 +8,8 @@ import SiderList from '../pages/siderList'
 import ContentCenter from '../pages/content'
 // 引入右侧sider
 import MusicMessage from '../pages/musicMessage'
+// 引入footer
+import LayoutFooter from "../pages/footer";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -49,7 +51,9 @@ const LayoutComponent: React.FC = () => {
           <MusicMessage />
         </Sider>
       </Layout>
-      <Footer className={styles.layout_footer}>footer</Footer>
+      <Footer className={styles.layout_footer}>
+        <LayoutFooter />
+      </Footer>
     </Layout>
   )
 }

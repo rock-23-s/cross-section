@@ -1,6 +1,6 @@
 import { defineConfig } from '@umijs/max';
 import routes from './src/route'
-
+import path from 'path';
 export default defineConfig({
   antd: {},
   access: {},
@@ -20,6 +20,13 @@ export default defineConfig({
   routes,
   npmClient: 'yarn',
   hash: true,
+  // 修改title
+  title:'cross-section',
+  // 修改icon
+  links: [
+    // href的图片你可以放在public里面，直接./图片名.png 就可以了，也可以是cdn链接
+    { rel: 'icon', href: './public/logo.svg' },
+  ],
   // 打包输出路径
   outputPath: 'release/app/dist/renderer',
   chainWebpack(memo) {

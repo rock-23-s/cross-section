@@ -8,7 +8,7 @@ export async function getInitialState(): Promise<{ name: string }> {
 
 export const layout = () => {
   return {
-    logo: './assets/logo.svg',
+    // logo: '',
     menu: {
       locale: false,
     },

@@ -1,4 +1,3 @@
-import { layout } from "../app";
 
 export default [
   {
