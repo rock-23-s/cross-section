@@ -3,16 +3,21 @@
  */
 import { List, Avatar } from 'antd'
 import styles from './index.less'
+import classNames from 'classnames';
 
 
 type MusicListType = {
-  list: {author: string, name: string, avatar: string | undefined}[]
+  list: {author: string, name: string, avatar: string | undefined}[];
+  className?: string;
 }
 const MusicList: React.FC<MusicListType> = (props) => {
-  const {list} = props
+  const {list, className} = props
 
   return <>
-    <div className={styles.musicList}>
+    <div className={classNames({
+      [styles.musicList]: true,
+      [className || '']: true,
+    })}>
       <List
         itemLayout="horizontal"
         dataSource={list}

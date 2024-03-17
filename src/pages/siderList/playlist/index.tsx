@@ -68,31 +68,31 @@ const PlayList: React.FC<PlayListType> = (props) => {
   const resetClass = (classList = {}) => useMemo(() => {
     return classNames({
       ...classList,
-      [styles.playlist_isShow]: collapsed,
+      [styles.playIcon_isShow]: collapsed,
     })
   }, [collapsed])
 
   return <>
-    <div className={styles.playlist}>
-      <div className={resetClass()}>
-        <ButtonRound name='歌单' clickHandle={songList} />
-        <ButtonRound name='艺人' className={styles.playlist_icon} clickHandle={songList} />
+    <div className={styles.play}>
+      <div className={styles.playIcon}>
+        <div className={resetClass()}>
+          <ButtonRound name='歌单' clickHandle={songList} />
+          <ButtonRound name='艺人' className={styles.playIcon_icon} clickHandle={songList} />
+        </div>
+
+        {/* 搜索 ｜ 排序  功能 */}
+        <div className={resetClass({[styles.playIcon_method]: true})}>
+            <IconFont name='search' width="16" />
+            <span>
+              <i className={styles.playIcon_method_recent}>最近播放</i>
+              <IconFont name='sort' width="18" />
+            </span>
+        </div>  
       </div>
-
-      {/* 搜索 ｜ 排序  功能 */}
-      <div className={resetClass({[styles.playlist_method]: true})}>
-          <IconFont name='search' width="16" />
-          <span>
-            <i className={styles.playlist_method_recent}>最近播放</i>
-            <IconFont name='sort' width="18" />
-          </span>
-      </div>  
-
-      <div className={styles.playlist_list}>
-        播放列表
-        <CrossScroll>
+      <div className={styles.playlist}>
+        <CrossScroll isRapidScroll={false} style={{ height: 'calc(100vh - 380px)' }}>
           <slot name='musicList'>
-            <MusicList list={mockMusicList} />
+            <MusicList list={mockMusicList} className={styles.playlist_music} />
           </slot>
         </CrossScroll>
       </div>

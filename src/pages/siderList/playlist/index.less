@@ -1,27 +1,43 @@
-.playlist {
-  &_isShow {
-    display: none !important;
+.play {
+  .playIcon {
+    padding: 0 16px 0 24px;
+  
+    &_isShow {
+      display: none !important;
+    }
+  
+    &_icon {
+      margin-left: 10px;
+    }
+  
+    &_method {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+  
+  
+      &_recent {
+        position: relative;
+        top: -2px;
+        margin-right: 6px;
+        font-style: inherit;
+        font-size: 14px;
+      }
+    }
+  
   }
-
-  &_icon {
-    margin-left: 10px;
-  }
-
-  &_method, &_list {
+  
+  .playlist{
     margin-top: 20px;
-  }
-
-  &_method {
-    display: flex;
-    justify-content: space-between;
-
-    &_recent {
-      position: relative;
-      top: -2px;
-      margin-right: 6px;
-      font-style: inherit;
-      font-size: 14px;
+  
+    &_music {
+      padding: 0 16px 0 24px;
     }
   }
 
+  :global {
+    .ant-list-item:last-child {
+      padding-bottom: 0;
+    }
+  }
 }

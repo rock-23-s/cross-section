@@ -1,3 +1,36 @@
+.crossScroll, .scrollHover {
+  width: 100%;
+  overflow: hidden;
+  #scrollbarHandle();
+}
+
 .crossScroll {
-  overflow-y: scroll;
+  overflow: auto !important;
+}
+
+.scrollHover:hover {
+  overflow: auto !important;
+}
+
+#scrollbarHandle () {
+
+  // 兼容谷歌的样式
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  // 滚动条 —— 背景色
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+  // 滚动条 颜色
+  &::-webkit-scrollbar-thumb {
+    background: #626161;
+    border-radius: 10px;
+  }
+
+  // 兼容火狐的样式
+  scrollbar-width: auto;
+  scrollbar-color: #626161 transparent;
+
 }
