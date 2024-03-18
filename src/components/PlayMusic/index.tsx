@@ -16,7 +16,7 @@ type PlayMusicType = {
 
 const PlayMusic: React.FC<PlayMusicType> = (props) => {
 
-  const audioRef = useRef(null);
+  const audioRef = useRef<any>(null);
   const audioCuttent: any = audioRef?.current
   // 获取播放的总时长
   const [timeALL, setTimeAll] = useState({
@@ -124,7 +124,12 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
         <IconFont name='loop' width={'25'} />
       </div>
       <div className={styles.playmusic_progressBar}>
-        <PrograssBar timeALL={timeALL} setTimeAll={setTimeAll} getDuration={getDuration} />
+        <PrograssBar
+          timeALL={timeALL}
+          setTimeAll={setTimeAll}
+          getDuration={getDuration}
+          audioRef={audioRef}
+        />
       </div>
     </div>
   </>

@@ -1,19 +1,26 @@
 import React, { useMemo, useRef } from "react"
 import styles from './index.less'
 import { Progress } from "antd";
+import { IconFont } from '@/icons/index'
+
 
 type PrograssBarType = {
+  /** 时间获取 */
   timeALL: {
     startTime: string;
     endTime: string;
     duration: number;
     currentTime: number;
   };
+  /** 更新时间 */
   setTimeAll: (flag: any) => void;
+  /** 重新计算currentTime */
   getDuration: (time: number) => void;
+  /** 音频的Ref */
+  audioRef: any
 }
 const PrograssBar: React.FC<PrograssBarType> = (props) => {
-  const { timeALL, setTimeAll, getDuration } = props
+  const { timeALL, setTimeAll, getDuration, audioRef } = props
   // 进度条 ref
   const prograssRef = useRef<any>(null)
 
@@ -47,14 +54,19 @@ const PrograssBar: React.FC<PrograssBarType> = (props) => {
     // 点击的位置：也就是点击距离左侧的宽度
     const offsetX = e.nativeEvent.offsetX
     // 最后的结果
-    const clientTime = timeALL.duration - ((prograssRef.current?.offsetWidth - offsetX) / 100 * 60)
-
+    const clientTime = timeALL.duration - ((offsetWidth - offsetX) / 100 * 60)
+    
     setTimeAll({
       ...timeALL,
       startTime: getDuration(clientTime),
       currentTime: clientTime
     })
+    if(audioRef.current) {
+      audioRef.current.currentTime = clientTime;
+      audioRef.current.play();
+    }
   }
+  console.log(computerPrograss,'-computerPrograss')
 
 
   return <>
@@ -63,9 +75,25 @@ const PrograssBar: React.FC<PrograssBarType> = (props) => {
         {useMemo(() => timeALL.startTime, [timeALL.startTime])}
       </div>
       <div className={styles.prograssBar_content}>
-          {/* 用Antd 的 progrress组件问题：1.样式问题, 2.事件 */}
-        <span onClick={audioProgressClick} ref={prograssRef}>
-          <Progress percent={computerPrograss} strokeColor={'#e6e6e6'} size="small" />
+        {/* 用Antd 的 progrress组件问题：1.样式问题, 2.事件 */}
+        {/* className={styles.prograssBar_content_cursor} */}
+        <span
+          onClick={audioProgressClick}
+          ref={prograssRef}
+          className={styles.prograssBar_content_bar}
+        >
+          <Progress
+            showInfo={false}
+            percent={computerPrograss}
+            strokeColor={'#e6e6e6'}
+            size="small"
+          />
+          <IconFont
+            name="cursor"
+            width={16}
+            className={styles.prograssBar_content_bar_cursor}
+            style={{ left: `${computerPrograss - 2}%`}}
+          />
         </span>
       </div>
       <div>{timeALL.endTime}</div>

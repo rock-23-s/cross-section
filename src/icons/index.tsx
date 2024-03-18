@@ -36,6 +36,7 @@ type IconFontType = {
   width?: string | number;
   className?: string;
   onClick?: () => void;
+  style?: object;
 }
 const IconFont: React.FC<IconFontType> = (props) => {
   const ListItem = union(...IconList).find(item => item.name === props.name)
