@@ -1,0 +1,39 @@
+.prograssBar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+
+  &>div {
+    width: 60px;
+    text-align: center;
+  }
+
+  &_content {
+    margin: 5px 10px;
+    flex: 1;
+    display: grid;
+    height: 6px;
+    
+    &>span {
+      display: flex;
+    }
+
+    :global {
+      .ant-progress-inner {
+        background-color: @default_prograss_bg;
+      }
+
+      .ant-progress-text {
+        display: none;
+      }
+
+      .ant-progress-outer {
+        height: auto;
+        margin-inline-end: 0 !important;
+        padding-inline-end: 0 !important;
+        display: flex;
+      }
+    }
+
+  }
+}

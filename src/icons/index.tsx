@@ -31,7 +31,13 @@ const avatarList = (avatarKey: string) => {
  * 导出图标
  * 
  */
-const IconFont = (props: {name: string, width?: string | number, className?: string}) => {
+type IconFontType = {
+  name: string;
+  width?: string | number;
+  className?: string;
+  onClick?: () => void;
+}
+const IconFont: React.FC<IconFontType> = (props) => {
   const ListItem = union(...IconList).find(item => item.name === props.name)
   return (
     <Icon

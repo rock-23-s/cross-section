@@ -1,5 +1,5 @@
 import { Avatar } from "antd"
-import defaultAvatar from '@/assets/defaultAvatar.jpg'
+import defaultAvatar from '@/assets/defaultAvatar.png'
 
 type ArtistAvatarType = {
   url?: string;

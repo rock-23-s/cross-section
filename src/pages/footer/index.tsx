@@ -30,6 +30,7 @@ const Footer:React.FC<FooterType> = (props) => {
       <div className={styles.footerMusic_play}>
         <PlayMusic />
       </div>
+      <div className={styles.footerMusic_surrounding}>1111</div>
     </div>
   </>
 }
