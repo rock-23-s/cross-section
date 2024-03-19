@@ -41,20 +41,18 @@ const PrograssBar: React.FC<PrograssBarType> = (props) => {
     /**
      * 计算思路：
      *  1. 我们获取进度条的宽度（offsetWidth）
-     *  2. 根据点击的位置获取宽度（offsetX）
-     *  3. 将进度条的宽度 - 点击位置的宽度，就等于剩下的宽度（也就是换算前，剩余的进度条）
-     *  4. 然后将剩余进度条换算成播放的剩余时间
-     *  5. 将音频的整个时间 - 换算后的剩余时间 = 结果
+     *  2. 根据点击的位置（offsetX）
+     *  3. 将 （（点击位置距离进度条的起始位置 / 进度条的宽度） * 总时长） ，就等于点击要定位的时间点
      * 
-     * 注：没有参考，将整个计算做了详细的推理反复思考，此计算的思想不一定对，但目前测试整体是没问题的。
+     * 注：没有参考，将整个计算做了反复思考，此计算的思想不一定对，但目前测试整体是没问题的。
      */
 
     // 进度条的宽度
-    const offsetWidth = prograssRef.current?.offsetWidth;
+    const clientWidth = prograssRef.current?.clientWidth;
     // 点击的位置：也就是点击距离左侧的宽度
     const offsetX = e.nativeEvent.offsetX
     // 最后的结果
-    const clientTime = timeALL.duration - ((offsetWidth - offsetX) / 100 * 60)
+    const clientTime = (offsetX / clientWidth) * timeALL.duration;
     
     setTimeAll({
       ...timeALL,
@@ -66,8 +64,6 @@ const PrograssBar: React.FC<PrograssBarType> = (props) => {
       audioRef.current.play();
     }
   }
-  console.log(computerPrograss,'-computerPrograss')
-
 
   return <>
     <div className={styles.prograssBar}>
@@ -75,26 +71,15 @@ const PrograssBar: React.FC<PrograssBarType> = (props) => {
         {useMemo(() => timeALL.startTime, [timeALL.startTime])}
       </div>
       <div className={styles.prograssBar_content}>
-        {/* 用Antd 的 progrress组件问题：1.样式问题, 2.事件 */}
+        {/* 用Antd 的 progrress组件问题：1.样式问题, 2.事件，所以干脆用html5 的progress标签 */}
         {/* className={styles.prograssBar_content_cursor} */}
-        <span
-          onClick={audioProgressClick}
-          ref={prograssRef}
-          className={styles.prograssBar_content_bar}
-        >
-          <Progress
-            showInfo={false}
-            percent={computerPrograss}
-            strokeColor={'#e6e6e6'}
-            size="small"
-          />
-          <IconFont
-            name="cursor"
-            width={16}
-            className={styles.prograssBar_content_bar_cursor}
-            style={{ left: `${computerPrograss - 2}%`}}
-          />
-        </span>
+        <progress ref={prograssRef} onClick={audioProgressClick} value={computerPrograss} className={styles.prograssBar_content_bar} max="100" />
+        <IconFont
+          name="cursor"
+          width={16}
+          className={styles.prograssBar_content_cursor}
+          style={{ left: `${computerPrograss - 1}%`}}
+        />
       </div>
       <div>{timeALL.endTime}</div>
     </div>

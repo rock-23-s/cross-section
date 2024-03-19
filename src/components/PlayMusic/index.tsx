@@ -69,6 +69,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
    * 图标按钮 —— 暂停和启动
    */
   const iconPlayHandler = (playMemo: string) => {
+    console.log('是否点击')
     if(playMemo === 'pause') { // 暂停
       audioCuttent.play();
       setIsPlay(true)
@@ -105,6 +106,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
       autoPlay
       ref={audioRef}
       loop
+      // controls
       src={require('@/assets/musicList/appearance.mp3')}
       onLoadedData={audioLoadedData}
       onPlaying={audioPlaying}
@@ -117,8 +119,8 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
       <div className={styles.playmusic_iconCllection}>
         <IconFont name='random' width={'25'} />
         <IconFont name='Previou' width={'20'} />
-        <span onClick={() => iconPlayHandler(playMemo)}>
-          <IconFont name={playMemo} width={'35'} className={styles.playmusic_iconCllection_isplay} />
+        <span>
+          <IconFont name={playMemo}  onClick={() => iconPlayHandler(playMemo)} width={'35'} className={styles.playmusic_iconCllection_isplay} />
         </span>
         <IconFont name='Previou' width={'20'} className={styles.playmusic_iconCllection_nextviou} />
         <IconFont name='loop' width={'25'} />
