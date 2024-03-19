@@ -61,16 +61,19 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
   /**
    * play：播放事件
    */
-  const audioPlaying = () => {
-    setIsPlay(true)
-  }
+  const audioPlaying = () => setIsPlay(true)
+
+  /**
+   * pased: 暂停事件
+   */
+  const audioPause = () => setIsPlay(false)
 
   /**
    * 图标按钮 —— 暂停和启动
    */
-  const iconPlayHandler = (playMemo: string) => {
+  const iconPlayHandler = (playMemo: boolean) => {
     console.log('是否点击')
-    if(playMemo === 'pause') { // 暂停
+    if(playMemo) { // 暂停
       audioCuttent.play();
       setIsPlay(true)
     } else { // 播放
@@ -78,14 +81,6 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
       setIsPlay(false)
     }
   }
-
-  /**
-   * 监听 播放还是暂停的 图标 显示
-   */
-  const playMemo = useMemo(() => {
-    return isPlay ? 'play' : 'pause'
-  }, [isPlay])
-
 
   /**
    * 
@@ -100,6 +95,14 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
       currentTime
     })
   }
+
+  /**
+   * 监听 播放还是暂停的 图标 显示
+   */
+  const playMemo = useMemo(() => {
+    const playIcon = isPlay ? 'play' : 'pause'
+    return <IconFont name={playIcon} onClick={() => iconPlayHandler(!isPlay)} width={'35'} className={styles.playmusic_iconCllection_isplay} />
+  }, [isPlay])
   return <>
     {/* 自定义音乐播放组件 */}
     <audio
@@ -110,6 +113,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
       src={require('@/assets/musicList/appearance.mp3')}
       onLoadedData={audioLoadedData}
       onPlaying={audioPlaying}
+      onPause={audioPause}
       onTimeUpdate={audioTimeUpdate}
     >
       您的浏览器不支持该音频格式。
@@ -120,7 +124,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
         <IconFont name='random' width={'25'} />
         <IconFont name='Previou' width={'20'} />
         <span>
-          <IconFont name={playMemo}  onClick={() => iconPlayHandler(playMemo)} width={'35'} className={styles.playmusic_iconCllection_isplay} />
+            { playMemo }
         </span>
         <IconFont name='Previou' width={'20'} className={styles.playmusic_iconCllection_nextviou} />
         <IconFont name='loop' width={'25'} />
