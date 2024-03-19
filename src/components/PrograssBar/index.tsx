@@ -1,8 +1,6 @@
-import React, { useMemo, useRef } from "react"
+import React, { useEffect, useMemo, useRef } from "react"
 import styles from './index.less'
-import { Progress } from "antd";
 import { IconFont } from '@/icons/index'
-
 
 type PrograssBarType = {
   /** 时间获取 */

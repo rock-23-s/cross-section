@@ -2,7 +2,6 @@
  * 自定义滚动条：
  *  简易版，暂不加事件了，等需要计算滚动条位置时，我再给此组件增加功能
  */
-import { text } from 'node:stream/consumers';
 import styles from './index.less'
 import { cloneDeep } from 'lodash';
 import classNames from 'classnames';

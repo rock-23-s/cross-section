@@ -2,6 +2,7 @@
 import { URL } from 'url';
 import path from 'path';
 
+
 export function resolveHtmlPath(htmlFileName: string) {
   if (process.env.NODE_ENV === 'development') {
     const port = process.env.PORT || 8000;
@@ -21,3 +22,5 @@ const RESOURCES_PATH = app.isPackaged
 export const getAssetPath = (...paths: string[]): string => {
   return path.join(RESOURCES_PATH, ...paths);
 };
+
+export const toPath = (url: string) => path.resolve(__dirname, url)

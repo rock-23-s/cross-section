@@ -16,6 +16,7 @@
     "outDir": "electron/.erb/dll",
     "paths": {
       "@/*": ["./src/*"],
+      "@@/*": ["./*"]
     },
     "types": ["@types/webpack-env", "react/experimental"]
   },

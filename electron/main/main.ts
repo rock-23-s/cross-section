@@ -17,6 +17,9 @@ import { resolveHtmlPath, getAssetPath } from './utils/path';
 // 创建子窗口
 // import { createAt } from './renderer/at'
 import { createTray } from './renderer/tray'
+import { MainType } from '../../src/enums/main'
+import { ffmpegList } from './utils/ffmpeg'
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -111,6 +114,13 @@ const createWindow = async () => {
       mainWindow.show();
     }
   });
+  
+  ipcMain.on(MainType.FFMPEG, (e, arg) => {
+    const { url } = arg;
+    if(url) {
+      ffmpegList(url)
+    }
+  })
 
   
   mainWindow.on('close', (e) => {

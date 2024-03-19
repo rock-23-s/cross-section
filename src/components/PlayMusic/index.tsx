@@ -2,13 +2,16 @@
  * 自写播放组件
  */
 
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 // 图标
 import { IconFont } from '@/icons/index'
 // 样式
 import styles from './index.less'
 // 组件
 import PrograssBar from '../PrograssBar'
+import { message } from 'antd';
+import { ipcRenderer, isElectron } from '@/utils/electron'
+import { MainType } from '@/enums/main';
 
 type PlayMusicType = {
 
@@ -61,7 +64,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
   /**
    * play：播放事件
    */
-  const audioPlaying = () => setIsPlay(true)
+  const audioPlaying = () => setIsPlay(true);
 
   /**
    * pased: 暂停事件
@@ -72,7 +75,6 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
    * 图标按钮 —— 暂停和启动
    */
   const iconPlayHandler = (playMemo: boolean) => {
-    console.log('是否点击')
     if(playMemo) { // 暂停
       audioCuttent.play();
       setIsPlay(true)
@@ -97,6 +99,30 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
   }
 
   /**
+   * onerror： 加载错误时触发
+   */
+  const audioError = () => {
+    message.warning('加载音乐失败');
+    // 重置数据
+    setTimeAll({
+      startTime: '0:00',
+      endTime: '0:00',
+      duration: 0,
+      currentTime: 0
+    })
+  }
+ 
+  useEffect(() => {
+    if(isElectron) {
+      ipcRenderer.send(MainType.FFMPEG, {
+        url: '/assets/musicList/test.wav'
+      })
+    } else {
+      message.warning('浏览器部分音乐格式不兼容')
+    }
+  }, [])
+
+  /**
    * 监听 播放还是暂停的 图标 显示
    */
   const playMemo = useMemo(() => {
@@ -115,6 +141,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
       onPlaying={audioPlaying}
       onPause={audioPause}
       onTimeUpdate={audioTimeUpdate}
+      onError={audioError}
     >
       您的浏览器不支持该音频格式。
     </audio>
