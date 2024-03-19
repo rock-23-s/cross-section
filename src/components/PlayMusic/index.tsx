@@ -11,7 +11,7 @@ import styles from './index.less'
 import PrograssBar from '../PrograssBar'
 import { message } from 'antd';
 import { ipcRenderer, isElectron } from '@/utils/electron'
-import { MainType } from '@/enums/main';
+import { MainEnums } from '@/enums/main';
 
 type PlayMusicType = {
 
@@ -114,7 +114,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
  
   useEffect(() => {
     if(isElectron) {
-      ipcRenderer.send(MainType.FFMPEG, {
+      ipcRenderer.send(MainEnums.FFMPEG, {
         url: '/assets/musicList/test.wav'
       })
     } else {
@@ -142,10 +142,11 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
       onPause={audioPause}
       onTimeUpdate={audioTimeUpdate}
       onError={audioError}
+      onEmptied={audioError}
     >
       您的浏览器不支持该音频格式。
     </audio>
-
+    {/* 主要代码 */}
     <div className={styles.playmusic}>
       <div className={styles.playmusic_iconCllection}>
         <IconFont name='random' width={'25'} />
@@ -165,6 +166,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
         />
       </div>
     </div>
+    
   </>
 }
 

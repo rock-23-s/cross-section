@@ -92,7 +92,7 @@ const PlayList: React.FC<PlayListType> = (props) => {
       <div className={styles.playlist}>
         <CrossScroll isRapidScroll={false} style={{ height: 'calc(100vh - 380px)' }}>
           <slot name='musicList'>
-            <MusicList list={mockMusicList} className={styles.playlist_music} />
+            <MusicList list={mockMusicList}/>
           </slot>
         </CrossScroll>
       </div>

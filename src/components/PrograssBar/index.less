@@ -1,3 +1,5 @@
+
+
 .prograssBar {
   display: flex;
   justify-content: space-between;
@@ -21,7 +23,7 @@
       background-color: @default_prograss_bg;
       border: none;
       #borderRadius;
-
+      
       // 学习：https://www.zhangxinxu.com/wordpress/2013/02/html5-progress-element-style-control/
       // 兼容火狐
       &::-moz-progress-bar {
@@ -55,6 +57,18 @@
       display: block;
     }
 
+    // &_bar:hover {
+    //   &::-webkit-progress-value {
+    //     background: @theme_color !important;
+    //     #borderRadius;
+    //   }
+
+    //   &::-moz-progress-bar {
+    //     background-color: @theme_color;
+    //     #borderRadius;
+    //   }
+    // }
+
     :global {
       .ant-progress-inner {
         background-color: @default_prograss_bg;
@@ -73,3 +87,4 @@
     }
   }
 }
+

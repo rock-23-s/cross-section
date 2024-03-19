@@ -6,12 +6,45 @@ import styles from './index.less'
 import ArtistAvatar from "@/components/ArtistAvatar"
 // 图标
 import { IconFont } from '@/icons/index'
+import { useMemo, useState } from "react"
+import { MainEnums } from '@/enums/main';
+import { ipcRenderer } from "@/utils/electron"
 
 type FooterType = {
+  /** 是否折叠 */
   clloected?: boolean;
 }
 const Footer:React.FC<FooterType> = (props) => {
   const { clloected = false } = props
+  // 是否全屏
+  const [isScreen, setIsScreen] = useState(false)
+  // 是否静音
+  const [isMute, setIsMute] = useState(false)
+
+  /**
+   * useMemo: 是否静音
+   */
+  const getMute = useMemo(() => {
+    const screenName = isMute ? 'mute' : 'sound'
+    return <IconFont name={screenName} width={'20'} />
+  }, [isMute])
+
+
+  /**
+   * 点击调用electron的全屏显示
+   */
+  const clickScreen = () => {
+    const screenState = isScreen ? MainEnums.CLOSESCREEN : MainEnums.FULLSREEN;
+    ipcRenderer.send(screenState)
+    setIsScreen(!isScreen)
+  }
+  /**
+   * useMemo: 是否全屏
+   */
+  const getScreen = useMemo(() => {
+    const screenName = isScreen ? 'closeScreen' : 'fullScreen'
+    return <IconFont name={screenName} width={'20'} onClick={clickScreen} />
+  }, [isScreen])
 
   return <>
     <div className={styles.footerMusic}>
@@ -30,7 +63,13 @@ const Footer:React.FC<FooterType> = (props) => {
       <div className={styles.footerMusic_play}>
         <PlayMusic />
       </div>
-      <div className={styles.footerMusic_surrounding}>1111</div>
+      <div className={styles.footerMusic_surrounding}>
+        <IconFont name='view' width={'20'} />
+        <IconFont name='mike' width={'20'} />
+        <IconFont name='queue' width={'22'} />
+        {getMute}
+        {getScreen}
+      </div>
     </div>
   </>
 }

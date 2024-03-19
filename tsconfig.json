@@ -15,8 +15,7 @@
     "allowJs": true,
     "outDir": "electron/.erb/dll",
     "paths": {
-      "@/*": ["./src/*"],
-      "@@/*": ["./*"]
+      "@/*": ["./src/*"]
     },
     "types": ["@types/webpack-env", "react/experimental"]
   },

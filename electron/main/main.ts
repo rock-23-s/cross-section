@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain, Notification} from 'electron';
+import { app, BrowserWindow, shell, ipcMain, Notification, ipcRenderer} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -17,7 +17,7 @@ import { resolveHtmlPath, getAssetPath } from './utils/path';
 // 创建子窗口
 // import { createAt } from './renderer/at'
 import { createTray } from './renderer/tray'
-import { MainType } from '../../src/enums/main'
+import { MainEnums } from '../../src/enums/main'
 import { ffmpegList } from './utils/ffmpeg'
 
 class AppUpdater {
@@ -66,6 +66,37 @@ function showNotification () {
   const notification = new Notification({ title: '是否关闭当前应用', body: '', icon: getAssetPath('logo.png') })
   notification.show();
 }
+
+/**
+ * 全屏
+ */
+ipcMain.on(MainEnums.FULLSREEN, () => {
+  if (mainWindow) {
+    mainWindow?.setFullScreen(true)
+  }
+});
+
+/**
+ * 关闭全屏
+ */
+ipcMain.on(MainEnums.CLOSESCREEN, () => {
+  mainWindow?.setFullScreen(false)
+});
+
+/**
+   * 音频转码
+   */
+ipcMain.on(MainEnums.FFMPEG, (e, arg) => {
+  const { url } = arg;
+  if(url) {
+    ffmpegList(url)
+  }
+})
+
+
+/**
+ * 创建窗口
+ */
 const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
@@ -96,6 +127,8 @@ const createWindow = async () => {
     },
   });
 
+  
+
   mainWindow.loadURL(resolveHtmlPath(''));
   /**
    * 创建子组件
@@ -115,27 +148,17 @@ const createWindow = async () => {
     }
   });
   
-  ipcMain.on(MainType.FFMPEG, (e, arg) => {
-    const { url } = arg;
-    if(url) {
-      ffmpegList(url)
-    }
-  })
-
-  
   mainWindow.on('close', (e) => {
     console.log('I do not want to be closed')
     // e.preventDefault();
   })
- 
-
 
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
 
   mainWindow.on('hide', () => {
-    console.log('hide -----')
+    // console.log('hide -----')
   })
 
   const menuBuilder = new MenuBuilder(mainWindow);
