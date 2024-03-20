@@ -47,7 +47,7 @@ const Content: React.FC = () => {
       <ButtonRound name='博客' clickHandle={clickButton} />
     </div>
     <CrossScroll
-      isRapidScroll={false}
+      isRapidScroll={true}
       className={styles.siderContent_center}
       style={{ height: 'calc(100vh - 483px)' }}
     >

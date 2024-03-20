@@ -11,6 +11,7 @@ type CrossScrollType = {
   height?: string | number | undefined;
   className?: string;
   style: object;
+  /** 是否hover时显示滚动条 */
   isRapidScroll?: boolean
 }
 
@@ -25,6 +26,7 @@ const CrossScroll: React.FC<CrossScrollType> = (props) => {
     })
     return list
   }
+
   return <>
     <div
       {...filterProps()}
