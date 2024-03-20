@@ -90,9 +90,12 @@ const PlayList: React.FC<PlayListType> = (props) => {
         </div>  
       </div>
       <div className={styles.playlist}>
-        <CrossScroll isRapidScroll={false} style={{ height: 'calc(100vh - 380px)' }}>
+        <CrossScroll
+          isRapidScroll={false}
+          style={{ height: `calc(100vh - ${collapsed ? 307 : 380}px)` }}
+        >
           <slot name='musicList'>
-            <MusicList list={mockMusicList}/>
+            <MusicList collapsed={collapsed} list={mockMusicList}/>
           </slot>
         </CrossScroll>
       </div>
