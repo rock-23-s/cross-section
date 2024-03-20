@@ -1,6 +1,73 @@
 .siderContent{
   height: 100%;
   overflow-y: auto;
+
+  &_button {
+    margin-top: 20px;
+
+    &>span {
+      margin-left: 10px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  &_center {
+    padding: 0 8px;
+    margin-top: 16px;
+  }
+
+  &_list{
+    margin-top: 20px;
+
+    :global {
+      .ant-list-items{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .ant-list-item {
+        background-color: @default_select_bg;
+        padding: 0;
+        padding-right: 10px;
+        #borderRadius ();
+      }
+
+      .ant-list-item-meta-title{
+        /* stylelint-disable-next-line value-no-vendor-prefix */
+        display: -webkit-box;
+        -webkit-box-orient:vertical; //从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
+        -webkit-line-clamp:2; //这个属性不是css的规范属性，需要组合上面两个属性，表示显示的行数。
+        margin: 0 !important;
+        #ellipsisText();
+      }
+
+      .ant-list-item-meta{
+        align-items: center !important;
+      }
+    }
+  }
+
+  &_listItem {
+    display: flex;
+    flex-wrap: wrap;
+    
+
+    &>div {
+      width: 25%;
+
+      @media screen and (max-width: 1220px) {
+        width: 33.33%;
+      }
+
+      @media screen and (max-width: 930px) {
+      width: 50%;
+      }
+    }
+  }
 }
 
 

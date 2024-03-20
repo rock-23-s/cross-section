@@ -1,3 +1,7 @@
+/**
+ * 音乐播放进度条
+ */
+
 import React, { useEffect, useMemo, useRef } from "react"
 import styles from './index.less'
 import { IconFont } from '@/icons/index'

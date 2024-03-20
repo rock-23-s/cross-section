@@ -136,7 +136,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
       ref={audioRef}
       loop
       // controls
-      src={require('@/assets/musicList/appearance.mp3')}
+      src={require('@/assets/musicList/floating.mp4')}
       onLoadedData={audioLoadedData}
       onPlaying={audioPlaying}
       onPause={audioPause}

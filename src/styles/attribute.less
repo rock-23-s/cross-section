@@ -12,3 +12,25 @@
 #borderRadius () {
   border-radius: 10px;
 }
+
+// 文字超过一行...隐藏显示
+#ellipsisText() {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+// hover时显示下划线
+#textDecoration () {
+  &:hover {
+    text-decoration: solid;
+    text-decoration-line: underline;
+  }
+}
+
+// hover时显示背景颜色
+#boxBackground() {
+  &:hover {
+    background-color: @default_button_bg_hover;
+    #borderRadius ();
+  }
+}

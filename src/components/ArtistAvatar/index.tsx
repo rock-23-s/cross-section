@@ -1,9 +1,13 @@
+
+/**
+ *  头像
+ */ 
 import { Avatar } from "antd"
 import defaultAvatar from '@/assets/defaultAvatar.png'
 
 type ArtistAvatarType = {
   url?: string;
-  size?: number;
+  size?: number | object;
   className?: string
 }
 
@@ -11,7 +15,12 @@ const ArtistAvatar: React.FC<ArtistAvatarType> = (props) => {
   const { url, size, className } = props;
 
   return <>
-    <Avatar className={className || ''} shape="square" size={size || 45} src={url || defaultAvatar}/>
+    <Avatar
+      className={className || ''}
+      shape="square"
+      size={size || 45}
+      src={url || defaultAvatar}
+    />
   </>
 }
 

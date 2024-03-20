@@ -18,7 +18,7 @@ type PlayListType = {
 }
 
 /** 模拟歌单列表 */
-const mockMusicList = [
+export const mockMusicList = [
   {
     name: '闻到(影视剧《唯有暗香来》）',
     author: '黄诗扶',

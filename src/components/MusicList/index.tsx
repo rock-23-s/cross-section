@@ -9,9 +9,18 @@ import classNames from 'classnames';
 type MusicListType = {
   list: {author: string, name: string, avatar: string | undefined}[];
   className?: string;
+  avatarSize?: number;
+  avatarSquare?: "square" | "circle" | undefined;
+  description?: boolean;
 }
 const MusicList: React.FC<MusicListType> = (props) => {
-  const {list, className} = props
+  const {
+    list,
+    className,
+    avatarSize=52,
+    avatarSquare="square",
+    description=true
+  } = props
 
   return <>
     <div className={classNames({
@@ -24,9 +33,9 @@ const MusicList: React.FC<MusicListType> = (props) => {
         renderItem={(item) => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={item.avatar} size={52} shape={'square'} />}
-              title={<a href="https://ant.design">{item.name}</a>}
-              description={item.author}
+              avatar={<Avatar src={item.avatar} size={avatarSize} shape={avatarSquare} />}
+              title={<>{item.name}</>}
+              description={description ? item.author : ''}
             />
           </List.Item>
         )}
