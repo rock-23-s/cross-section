@@ -40,18 +40,18 @@ const Content: React.FC = () => {
   return <div className={styles.siderContent}>
     {/* 轮播 */}
     <MusicCarousel carouselList={carouselList} />
+    {/* 按钮 */}
+    <div className={styles.siderContent_button}>
+      <ButtonRound name='全部' clickHandle={clickButton} />
+      <ButtonRound name='音乐' clickHandle={clickButton} />
+      <ButtonRound name='博客' clickHandle={clickButton} />
+    </div>
     <CrossScroll
       isRapidScroll={false}
       className={styles.siderContent_center}
-      style={{ height: 'calc(100vh - 433px)' }}
+      style={{ height: 'calc(100vh - 483px)' }}
     >
       <slot name='musicList'>
-        {/* 按钮 */}
-        <div className={styles.siderContent_button}>
-          <ButtonRound name='全部' clickHandle={clickButton} />
-          <ButtonRound name='音乐' clickHandle={clickButton} />
-          <ButtonRound name='博客' clickHandle={clickButton} />
-        </div>
         {/* 音乐列表 */}
         <MusicList
           className={styles.siderContent_list}
