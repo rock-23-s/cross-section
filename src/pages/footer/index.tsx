@@ -6,9 +6,9 @@ import styles from './index.less'
 import ArtistAvatar from "@/components/ArtistAvatar"
 // 图标
 import { IconFont } from '@/icons/index'
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { MainEnums } from '@/enums/main';
-import { ipcRenderer } from "@/utils/electron"
+import { ipcRenderer, isElectron } from "@/utils/electron"
 
 type FooterType = {
   /** 是否折叠 */
@@ -45,6 +45,18 @@ const Footer:React.FC<FooterType> = (props) => {
     const screenName = isScreen ? 'closeScreen' : 'fullScreen'
     return <IconFont name={screenName} width={'20'} onClick={clickScreen} />
   }, [isScreen])
+
+  useEffect(() => {
+    console.log('是否执行')
+    if(isElectron && ipcRenderer) {
+      /**
+       * 用于electron设置全屏时，更改状态用
+       */
+      ipcRenderer.on(MainEnums.SETFULLSCREEN, (screen) => {
+        setIsScreen(!!screen)
+      })
+    }
+  }, [])
 
   return <>
     <div className={styles.footerMusic}>

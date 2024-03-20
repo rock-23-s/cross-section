@@ -127,15 +127,12 @@ const createWindow = async () => {
     },
   });
 
-  
-
   mainWindow.loadURL(resolveHtmlPath(''));
   /**
    * 创建子组件
    **/
   // createAt(mainWindow)
   createTray(mainWindow)
-
   
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
@@ -159,6 +156,22 @@ const createWindow = async () => {
 
   mainWindow.on('hide', () => {
     // console.log('hide -----')
+  })
+
+  /**
+   * 窗口最大化
+   */
+  mainWindow.on('enter-full-screen', () => {
+    // 当渲染进程像主进程发送数据时，就不可以再使用ipcMain或ipcRenderer操作了，而是采用mainWindow
+    mainWindow?.webContents.send(MainEnums.SETFULLSCREEN, true)
+  })
+
+  /**
+   * 窗口
+   */
+  mainWindow.on('leave-full-screen', () => {
+    // 当渲染进程像主进程发送数据时，就不可以再使用ipcMain或ipcRenderer操作了，而是采用mainWindow
+    mainWindow?.webContents.send(MainEnums.SETFULLSCREEN, false)
   })
 
   const menuBuilder = new MenuBuilder(mainWindow);

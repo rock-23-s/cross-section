@@ -3,6 +3,8 @@ export enum MainEnums {
   FFMPEG = 'main:ffmpeg',
   /** 全屏 */
   FULLSREEN='main:fullScreen',
+  /** 设置全屏 */
+  SETFULLSCREEN="main:setFullScreen",
   /** 收起全屏 */
   CLOSESCREEN='main:closeScreen',
 }
