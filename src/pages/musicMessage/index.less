@@ -1,0 +1,39 @@
+.musicMessage {
+  &_box {
+    padding: 20px;
+
+    &_card {
+      background-color: @default_button_bg_hover;
+      padding: 10px;
+      margin-top: 30px;
+      #borderRadius();
+  
+      &_title {
+        display: flex;
+        justify-content: space-between;
+        height: 30px;
+        line-height: 30px;
+  
+        &>span {
+          color: @default_color_remark;
+          transition: color .4s linear;
+  
+          &:hover {
+            color: #fff;
+          }
+  
+          #textDecoration ();
+        }
+      }
+
+      &_artist {
+        margin-top: 10px;
+        
+        &>ul {
+          margin-top: 20px;
+
+        }
+      }
+    }
+  }
+}

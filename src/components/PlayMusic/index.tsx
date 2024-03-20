@@ -14,10 +14,12 @@ import { ipcRenderer, isElectron } from '@/utils/electron'
 import { MainEnums } from '@/enums/main';
 
 type PlayMusicType = {
-
+  /** 是否自动播放 */
+  autoPlay?: boolean;
 }
 
 const PlayMusic: React.FC<PlayMusicType> = (props) => {
+  const { autoPlay } = props
 
   const audioRef = useRef<any>(null);
   const audioCuttent: any = audioRef?.current
@@ -132,7 +134,7 @@ const PlayMusic: React.FC<PlayMusicType> = (props) => {
   return <>
     {/* 自定义音乐播放组件 */}
     <audio
-      autoPlay
+      autoPlay={autoPlay}
       ref={audioRef}
       loop
       // controls

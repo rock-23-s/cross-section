@@ -73,7 +73,7 @@ const Footer:React.FC<FooterType> = (props) => {
         </div>
       </div>
       <div className={styles.footerMusic_play}>
-        <PlayMusic />
+        <PlayMusic autoPlay={false} />
       </div>
       <div className={styles.footerMusic_surrounding}>
         <IconFont name='view' width={'20'} />

@@ -38,7 +38,7 @@ const CrossScroll: React.FC<CrossScrollType> = (props) => {
       })}
     >
       {
-        children.props.name === 'musicList'
+        children.props?.name === 'musicList'
           ?
           children.props.children
           :

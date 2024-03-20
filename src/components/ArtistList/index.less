@@ -1,0 +1,32 @@
+.artistList {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+
+  &_artist {
+    margin-bottom: 7px;
+    font-size: 17px;
+    #textDecoration ();
+  }
+
+  // 关注按钮样式
+  &_focus {
+    :global {
+      .ant-btn {
+        border: 1px solid @default_prograss_bg;
+      }
+    }
+
+    &:hover {
+      :global {
+        .ant-btn {
+          background-color: transparent;
+          border: 1px solid #fff;
+          // 放大效果
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+}
