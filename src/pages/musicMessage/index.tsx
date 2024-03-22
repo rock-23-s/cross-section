@@ -12,7 +12,7 @@ const MusicMessage: React.FC = () => {
     >
       <slot name="musicList">
         <div className={styles.musicMessage_box}>
-          <MusicListItem />
+          <MusicListItem isHover={false} />
           {/* 提供者 */}
           <div className={styles.musicMessage_box_card}>
             <div className={styles.musicMessage_box_card_title}>

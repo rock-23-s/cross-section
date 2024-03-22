@@ -1,5 +1,6 @@
 .musicListItem {
   padding: 10px;
+  position: relative;
 
   &_avatar {
     width: 100%;
@@ -22,6 +23,21 @@
   
   &_author {
     color: @default_color_remark;
+  }
+
+  &_isPlayIcon {
+    position: absolute;
+    bottom: 4.5rem;
+    right: 20px;
+    background-color: #f8f8f8;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity .6s linear;
+  }
+
+  &:hover > &_isPlayIcon {
+    opacity: 1;
+    transition: opacity .6s linear;
   }
 
   #boxBackground();
