@@ -1,7 +1,13 @@
 /* eslint import/prefer-default-export: off */
 import { URL } from 'url';
 import path from 'path';
+import { app, nativeImage } from 'electron';
 
+
+// ts 类型
+type PathType = {
+  image: {path: string, size?:{width?: number, height?: number}}
+}
 
 export function resolveHtmlPath(htmlFileName: string) {
   if (process.env.NODE_ENV === 'development') {
@@ -13,7 +19,6 @@ export function resolveHtmlPath(htmlFileName: string) {
   return `file://${path.resolve(__dirname, '../../src/renderer/', htmlFileName)}`;
 }
 
-import { app } from 'electron';
 
 const RESOURCES_PATH = app.isPackaged
   ? path.join(process.resourcesPath, 'assets')
@@ -22,5 +27,11 @@ const RESOURCES_PATH = app.isPackaged
 export const getAssetPath = (...paths: string[]): string => {
   return path.join(RESOURCES_PATH, ...paths);
 };
+
+// 托盘小图标
+export const applicationImage = ({path, size}: PathType['image']) =>{
+  return nativeImage.createFromPath(getAssetPath(path)).resize({ ...size })
+};
+
 
 export const toPath = (url: string) => path.resolve(__dirname, url)

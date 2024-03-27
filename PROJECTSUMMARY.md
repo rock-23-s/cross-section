@@ -20,4 +20,10 @@
   等这个项目完成后，我下一步的规划就是：把我过往自写编辑框的经验，再写出一个公共插件发布npm。
 
 
+# 安装的插件
+   [electron-window-state](https://www.npmjs.com/package/electron-window-state)
+      有助于保存和恢复电子窗口的大小和位置
+   [electron-store](https://www.npmjs.com/package/electron-store)
+      Electron 没有内置的方法来保存用户设置和其他数据。该模块会为您处理该问题.
+   
 

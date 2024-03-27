@@ -9,18 +9,21 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain, Notification, ipcRenderer} from 'electron';
+import { app, BrowserWindow, shell, ipcMain, Notification, dialog, nativeImage} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
-import { resolveHtmlPath, getAssetPath } from './utils/path';
+import { resolveHtmlPath, getAssetPath, applicationImage } from './utils/path';
 // 创建子窗口
 // import { createAt } from './renderer/at'
 import { createTray } from './renderer/tray'
 import { MainEnums } from '../../src/enums/main'
 // 视频转码
 import { ffmpegList } from './utils/ffmpeg'
-import windowState from 'electron-window-state'
+// 有助于保存和恢复电子窗口的大小和位置
+import windowState from 'electron-window-state';
+import { store } from './store'
+import { isMac } from './utils/os';
 
 class AppUpdater {
   constructor() {
@@ -31,12 +34,6 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-// 是否隐藏
-let isHide = false
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  event.reply('ipc-example', msgTemplate('pong'));
-});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -68,6 +65,16 @@ function showNotification () {
   notification.show();
 }
 
+/***
+ * ipcMain and ipcRenderer
+ */
+
+// 是否隐藏
+ipcMain.on('ipc-example', async (event, arg) => {
+  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
+  event.reply('ipc-example', msgTemplate('pong'));
+});
+
 /**
  * 全屏
  */
@@ -76,6 +83,22 @@ ipcMain.on(MainEnums.FULLSREEN, () => {
     mainWindow?.setFullScreen(true)
   }
 });
+
+/**
+ * 下载
+ */
+ipcMain.on(MainEnums.DOWNLOAD, () => {
+  dialog.showOpenDialog({
+    title: '请选择下载路径',
+    defaultPath: app.getPath('downloads'),
+    properties: ['openDirectory', 'createDirectory']
+  }).then((res) => {
+    if(res.filePaths) {
+      store.set('downloadPath', res.filePaths)
+    }
+  })
+})
+
 
 /**
  * 关闭全屏
@@ -102,11 +125,15 @@ const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
   }
+  /**
+   * 有助于保存和恢复电子窗口的大小和位置
+   */
   let mainWidowState = windowState({
     defaultWidth: 1024,
     defaultHeight: 728,
   })
-  console.log(mainWidowState, '------ main window state')
+
+  // 创建主窗口
   mainWindow = new BrowserWindow({
     x: mainWidowState.x,
     y: mainWidowState.y,
@@ -157,7 +184,7 @@ const createWindow = async () => {
   mainWindow.on('close', (e) => {
     console.log('I do not want to be closed')
     e.preventDefault();
-    mainWindow?.hide()
+    app?.hide()
   })
 
   mainWindow.on('closed', () => {
@@ -199,9 +226,17 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
+
 /**
  * Add event listeners...
  */
+
+if(isMac) {
+  const dockIcon = applicationImage({path: 'dockIcon.png'})
+ 
+  // 获取图标路径
+  app.dock.setIcon(dockIcon)
+}
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
@@ -219,6 +254,7 @@ app
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
       if (mainWindow === null) createWindow();
+      
     });
   })
   .then(showNotification)

@@ -7,4 +7,6 @@ export enum MainEnums {
   SETFULLSCREEN="main:setFullScreen",
   /** 收起全屏 */
   CLOSESCREEN='main:closeScreen',
+  /** 下载 */
+  DOWNLOAD='main:download',
 }

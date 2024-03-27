@@ -1,14 +1,12 @@
-import { BrowserWindow, Menu, Tray, app, ipcMain, ipcRenderer, nativeImage } from "electron";
-import { getAssetPath } from "../utils/path";
+import { BrowserWindow, Menu, Tray, app, nativeImage } from "electron";
+import { applicationImage } from "../utils/path";
 
-// 托盘小图标
-const applicationImage = (path: any) =>
-  nativeImage.createFromPath(path).resize({ width: 18, height: 18 });
-const trayIcon = getAssetPath('tray.png');
+// 获取图标路径
+const trayIcon = applicationImage({path: 'tray.png', size: { width: 18, height: 18 }});
 
 export const createTray = (main: BrowserWindow) => {
   /** 根据托盘所需的大小重绘 */
-  let tray = new Tray(applicationImage(trayIcon))
+  let tray = new Tray(trayIcon)
 
   const menuOption = [
     { label: '退出', accelerator: 'Cmd+Q', click: () => {  app.exit() } }

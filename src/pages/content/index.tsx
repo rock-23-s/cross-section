@@ -12,6 +12,8 @@ import MusicCarousel from '@/components/MusicCarousel'
 import CrossScroll from '@/components/CrossScroll'
 // 单个的音乐列表
 import MusicListItem from '@/components/MusicListItem';
+import { ipcRenderer, isElectron } from '@/utils/electron'
+import { MainEnums } from '@/enums/main'
 
 const carouselList = [
   {
@@ -36,7 +38,18 @@ const Content: React.FC = () => {
   /**
    * 按钮点击事件
    */
-  const clickButton = () => console.log('点击')
+  const clickButton = () => console.log('点击');
+
+  /**
+   * 下载按钮
+   */
+  const dowloadButton = () => {
+    if(isElectron) {
+      /** 获取下载的路径 */
+      ipcRenderer.send(MainEnums.DOWNLOAD);
+    }
+  }
+
   return <div className={styles.siderContent}>
     {/* 轮播 */}
     <MusicCarousel carouselList={carouselList} />
@@ -45,6 +58,7 @@ const Content: React.FC = () => {
       <ButtonRound name='全部' clickHandle={clickButton} />
       <ButtonRound name='音乐' clickHandle={clickButton} />
       <ButtonRound name='博客' clickHandle={clickButton} />
+      <ButtonRound name='下载' clickHandle={dowloadButton} />
     </div>
     <CrossScroll
       isRapidScroll={true}
