@@ -35,7 +35,7 @@ const SiderList: React.FC<SiderListType> = (props) => {
         ?
         <IconFont name='home_active' width="25" />
         :
-        <IconFont name='home' width="25" />
+        <IconFont name='home' width="90" />
     ),
     getItem(
       '搜索',

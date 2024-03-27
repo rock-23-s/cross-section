@@ -29,10 +29,15 @@
     position: absolute;
     bottom: 4.5rem;
     right: 20px;
-    background-color: #f8f8f8;
-    border-radius: 50%;
+    color: @theme_color;
     opacity: 0;
     transition: opacity .6s linear;
+
+    :global {
+      .anticon svg {
+        font-size: 3rem;
+      }
+    }
   }
 
   &:hover > &_isPlayIcon {

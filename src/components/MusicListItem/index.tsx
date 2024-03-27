@@ -25,7 +25,7 @@ const MusicListItem: React.FC<MusicListItemType> = (props) => {
     return <IconFont
       className={styles.musicListItem_isPlayIcon}
       name={isPauseIcon}
-      style={{ width: '2.5rem' }}
+      // style={{ width: '2.5rem' }}
       width={'100%'}
     />
   }, [])
