@@ -60,6 +60,9 @@ const electronHandler = {
   },
 };
 
+/**
+ * 将API注入到window，实现渲染进程和主进程的通讯
+ */
 contextBridge.exposeInMainWorld('electron', electronHandler);
 
 export type ElectronHandler = typeof electronHandler;

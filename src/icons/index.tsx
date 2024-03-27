@@ -51,7 +51,6 @@ type IconFontType = {
 }
 const IconFont: React.FC<IconFontType> = (props) => {
   // const ListItem = union(...IconList).find(item => item.name === props.name)
-  console.log(props)
   return (
     <>
       {/* <Icon

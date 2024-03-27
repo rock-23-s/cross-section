@@ -28,7 +28,6 @@ const MusicList: React.FC<MusicListType> = (props) => {
 
 
   const resetText = (item: { author: string; name: string; avatar: string | undefined; }) => useMemo(() => {
-    console.log(collapsed, '---collapsed')
     const collapsedObj =  collapsed ? {} : {title: item.name, description: description ? item.author : ''}
     return collapsedObj
   }, [collapsed, description])

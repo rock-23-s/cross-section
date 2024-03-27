@@ -18,7 +18,9 @@ import { resolveHtmlPath, getAssetPath } from './utils/path';
 // import { createAt } from './renderer/at'
 import { createTray } from './renderer/tray'
 import { MainEnums } from '../../src/enums/main'
+// 视频转码
 import { ffmpegList } from './utils/ffmpeg'
+import windowState from 'electron-window-state'
 
 class AppUpdater {
   constructor() {
@@ -29,10 +31,10 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-
+// 是否隐藏
+let isHide = false
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
@@ -62,7 +64,6 @@ const installExtensions = async () => {
 };
 
 function showNotification () {
-  console.log('show notification')
   const notification = new Notification({ title: '是否关闭当前应用', body: '', icon: getAssetPath('logo.png') })
   notification.show();
 }
@@ -101,11 +102,17 @@ const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
   }
-
+  let mainWidowState = windowState({
+    defaultWidth: 1024,
+    defaultHeight: 728,
+  })
+  console.log(mainWidowState, '------ main window state')
   mainWindow = new BrowserWindow({
+    x: mainWidowState.x,
+    y: mainWidowState.y,
+    width: mainWidowState.width,
+    height: mainWidowState.height,
     show: false,
-    width: 1024,
-    height: 728,
     // min|max -width|height来设置窗口的最大值或最小值
     minWidth: 700,
     minHeight: 570,
@@ -126,6 +133,8 @@ const createWindow = async () => {
         : path.join(__dirname, '../.erb/dll/preload.js'),
     },
   });
+  
+  mainWidowState.manage(mainWindow);
 
   mainWindow.loadURL(resolveHtmlPath(''));
   /**
@@ -147,11 +156,13 @@ const createWindow = async () => {
   
   mainWindow.on('close', (e) => {
     console.log('I do not want to be closed')
-    // e.preventDefault();
+    e.preventDefault();
+    mainWindow?.hide()
   })
 
   mainWindow.on('closed', () => {
-    mainWindow = null;
+    mainWindow = null as any;
+    app.quit();
   });
 
   mainWindow.on('hide', () => {
