@@ -1,6 +1,9 @@
 import { defineConfig } from '@umijs/max';
 import routes from './src/route'
 import path from 'path';
+
+
+
 export default defineConfig({
   antd: {},
   access: {},
@@ -35,18 +38,31 @@ export default defineConfig({
       content: 'width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no'
   },
   ],
-  chainWebpack(memo) {
-    // memo.module
-    //   .rule('svgo')
+  chainWebpack(config) {
+    // 解决配置svg问题：https://github.com/hanyuxinting/Blog/issues/26
+    // config.module
+    //   .rule("svg")
     //   .test(/\.svg$/)
-    //   .use('svgo-loader')
-    //   .loader(require.resolve('svgo-loader'));
-    
-    // memo.module
-    // .rule('svg-sprite')
-    // .test(/\.svg$/)
-    // .use('svg-sprite-loader')
-    // .loader(require.resolve('svg-sprite-loader'))
-  }
+    //   .use('file')
+    //   .loader(require.resolve("svg-sprite-loader"))
+    //   .options({}).end()
+    //   .use('file')
+    //   .loader(require.resolve('svgo-loader')).options({
+    //     plugins: [{
+    //       name: 'removeAttrs',
+    //       params: {attrs: 'fill'}
+    //     }]
+    //   }).end()
+    //   .before('image');
+
+    config.module
+      .rule('file-loader')
+      .test(/\.(png|jpg|gif|mp3|wav|otf)$/i)
+      .type('asset/resource')
+      .end();
+  },
+  alias: {
+    '@/electron': path.resolve(__dirname, 'electron'),
+  },
 });
 

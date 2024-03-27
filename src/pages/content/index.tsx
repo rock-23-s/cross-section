@@ -11,7 +11,8 @@ import MusicCarousel from '@/components/MusicCarousel'
 // 滚动条组件
 import CrossScroll from '@/components/CrossScroll'
 // 单个的音乐列表
-import MusicListItem from '@/components/MusicListItem'
+import MusicListItem from '@/components/MusicListItem';
+console.log(require('@/assets/navList/nav1.png'))
 
 const carouselList = [
   {

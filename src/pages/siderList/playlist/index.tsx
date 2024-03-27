@@ -16,7 +16,6 @@ type PlayListType = {
   /** 收缩框状态 */
   collapsed: boolean;
 }
-
 /** 模拟歌单列表 */
 export const mockMusicList = [
   {

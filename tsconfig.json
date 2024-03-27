@@ -2,9 +2,9 @@
   // "extends": "./src/.umi/tsconfig.json",
   "compilerOptions": {
     "incremental": true,
-    "target": "es2022",
+    "target": "ESNext",
     "module": "commonjs",
-    "lib": ["dom", "es2022"],
+    "lib": ["dom", "ESNext"],
     "jsx": "react-jsx",
     "strict": true,
     "sourceMap": true,
@@ -13,7 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": "electron/.erb/dll",
+    "outDir": "build/dist",
     "paths": {
       "@/*": ["./src/*"],
     },
