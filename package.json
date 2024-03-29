@@ -18,7 +18,8 @@
     "start:electron": "ts-node ./electron/.erb/scripts/check-port-in-use.js && npm run start:renderer",
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./electron/.erb/configs/webpack.config.preload.dev.ts",
-    "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./electron/.erb/configs/webpack.config.renderer.dev.ts"
+    "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./electron/.erb/configs/webpack.config.renderer.dev.ts",
+    "build:dll": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./electron/.erb/configs/webpack.config.preload.dev.dll.ts"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
